@@ -1,0 +1,22 @@
+{
+  "$schema": "https://dl.viam.dev/module.schema.json",
+  "module_id": "erh:spaceport-app",
+  "visibility": "public",
+  "url": "",
+  "description": "Hello world Viam app for the Spaceport machine",
+  "models": [],
+  "applications": [
+    {
+      "name": "spaceport-app",
+      "type": "single_machine",
+      "entrypoint": "dist/index.html"
+    }
+  ],
+  "entrypoint": "",
+  "build": {
+    "build": "make module",
+    "setup": "make setup-linux",
+    "arch": ["linux/amd64", "linux/arm64"],
+    "path": "module.tar.gz"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "spaceport-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"vite --port 5173\" \"viam module local-app-testing --app-url http://localhost:5173/ --machine-id 2b03b2c0-0247-4594-9e4d-13ef243d185a\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tsconfig/svelte": "^5.0.4",
+    "concurrently": "^9.2.0",
+    "svelte": "^5.28.1",
+    "svelte-check": "^4.1.6",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@viamrobotics/sdk": "^0.61.1",
+    "typescript-cookie": "^1.0.6"
+  }
+}
