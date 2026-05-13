@@ -12,7 +12,7 @@
     machineId: string;
   };
 
-  type AppStatus = 'loading' | 'connected' | 'error';
+  type AppStatus = 'loading' | 'connected' | 'no-viam' | 'error';
 
   const state = $state({
     status: 'loading' as AppStatus,
@@ -34,16 +34,14 @@
 
   async function init() {
     if (!machineKey) {
-      state.error =
-        'No machine info in URL. Expected path: /machine/{hostname}/';
-      state.status = 'error';
+      // No Viam URL — running standalone (e.g. GitHub Pages demo)
+      state.status = 'no-viam';
       return;
     }
 
     const raw = getCookie(machineKey);
     if (!raw) {
-      state.error = `No cookie found for "${machineKey}". Access this app via the Viam platform or run: viam module local-app-testing`;
-      state.status = 'error';
+      state.status = 'no-viam';
       return;
     }
 
@@ -91,6 +89,13 @@
   {#if state.status === 'loading'}
     <div class="card">
       <p class="muted center">Connecting to machine…</p>
+    </div>
+  {:else if state.status === 'no-viam'}
+    <div class="card launch-card">
+      <button class="launch-btn" onclick={() => (showSpaceWindow = true)}>🚀 Launch Space Window</button>
+    </div>
+    <div class="card">
+      <p class="muted center">Not connected to a Viam machine — running in demo mode.</p>
     </div>
   {:else if state.status === 'error'}
     <div class="card error-card">
