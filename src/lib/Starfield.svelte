@@ -70,10 +70,19 @@
     }
     (geometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
 
-    // Parallax: head right → view pans right (positive rotation.y)
     if (cam) {
-      cam.rotation.x += (headY * 1.2 - cam.rotation.x) * 0.1;
-      cam.rotation.y += (headX * 1.2 - cam.rotation.y) * 0.1;
+      // Translate the camera sideways — nearby stars shift more than distant ones,
+      // giving true depth-based window parallax instead of a "turning head" feel.
+      // Head right → camera moves right → nearby stars appear to streak left.
+      const targetX =  headX * 50;
+      const targetY = -headY * 35; // invert Y: head up → camera up → stars shift down
+      cam.position.x += (targetX - cam.position.x) * 0.08;
+      cam.position.y += (targetY - cam.position.y) * 0.08;
+
+      // Small complementary rotation so the view stays aimed at the center of the
+      // starfield tunnel rather than drifting off-axis.
+      cam.rotation.y += ( headX * 0.12 - cam.rotation.y) * 0.08;
+      cam.rotation.x += (-headY * 0.08 - cam.rotation.x) * 0.08;
     }
   });
 </script>
