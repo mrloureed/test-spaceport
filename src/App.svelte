@@ -1,6 +1,9 @@
 <script lang="ts">
   import { getCookie } from 'typescript-cookie';
   import * as VIAM from '@viamrobotics/sdk';
+  import SpaceWindow from './lib/SpaceWindow.svelte';
+
+  let showSpaceWindow = $state(false);
 
   type CookieData = {
     apiKey: { id: string; key: string };
@@ -75,6 +78,10 @@
   });
 </script>
 
+{#if showSpaceWindow}
+  <SpaceWindow onclose={() => (showSpaceWindow = false)} />
+{/if}
+
 <main>
   <header>
     <h1>🚀 Spaceport</h1>
@@ -91,6 +98,10 @@
       <p class="error-message">{state.error}</p>
     </div>
   {:else}
+    <div class="card launch-card">
+      <button class="launch-btn" onclick={() => (showSpaceWindow = true)}>🚀 Launch Space Window</button>
+    </div>
+
     <div class="card">
       <h2>✅ Connected</h2>
       <table>
@@ -295,5 +306,29 @@
   .center {
     text-align: center;
     padding: 1rem 0;
+  }
+
+  .launch-card {
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem;
+  }
+
+  .launch-btn {
+    background: linear-gradient(135deg, #4c1d95, #7c3aed);
+    border: none;
+    border-radius: 0.6rem;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .launch-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
   }
 </style>
