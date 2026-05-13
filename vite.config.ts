@@ -2,6 +2,6 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 export default defineConfig({
-  base: './',
+  base: process.env.GITHUB_PAGES ? '/test-spaceport/' : './',
   plugins: [svelte()],
 });
