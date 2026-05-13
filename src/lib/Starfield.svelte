@@ -72,8 +72,8 @@
 
     // Parallax: head right → view pans right (positive rotation.y)
     if (cam) {
-      cam.rotation.x += (headY * 0.4 - cam.rotation.x) * 0.06;
-      cam.rotation.y += (headX * 0.4 - cam.rotation.y) * 0.06;
+      cam.rotation.x += (headY * 1.2 - cam.rotation.x) * 0.1;
+      cam.rotation.y += (headX * 1.2 - cam.rotation.y) * 0.1;
     }
   });
 </script>
