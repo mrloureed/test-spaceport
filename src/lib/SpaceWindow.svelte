@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
   import { Canvas } from '@threlte/core';
-  import Starfield from './Starfield.svelte';
+  import Starfield, { type Variant } from './Starfield.svelte';
   import { FaceDetector, FilesetResolver } from '@mediapipe/tasks-vision';
 
   interface Props {
@@ -9,6 +9,10 @@
   }
 
   let { onclose }: Props = $props();
+
+  const VARIANTS: Variant[] = ['warp', 'side'];
+  const rawView = new URLSearchParams(window.location.search).get('view') ?? 'warp';
+  const variant: Variant = (VARIANTS as string[]).includes(rawView) ? (rawView as Variant) : 'warp';
 
   let headX = $state(0);
   let headY = $state(0);
@@ -85,7 +89,7 @@
   <video bind:this={videoEl} class="webcam" class:visible={showPreview} muted playsinline></video>
 
   <Canvas>
-    <Starfield {headX} {headY} />
+    <Starfield {headX} {headY} {variant} />
   </Canvas>
 
   <div class="hud">
@@ -116,6 +120,7 @@
     </div>
 
     <div class="hud-right">
+      <span class="hud-text dim" style="margin-right:0.75rem">{variant}</span>
       <button class="hud-btn close" onclick={onclose}>✕ Close</button>
     </div>
   </div>
